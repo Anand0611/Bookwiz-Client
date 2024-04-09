@@ -1,0 +1,54 @@
+<div className='=w-screen h-[50px] justify-center items-center'>
+        <div className='m-auto w-full h-full flex justify-between items-center '>
+            <span className=' ml-[80px] mt-[40px] translate-x-[-550px]  font-[museomoderno] text-white font-bold text-[35px] '>BookWiz</span>
+            <div className="  flex items-center col-auto translate-x-[70px] translate-y-[30px] text-white">
+            <ul className="flex gap-[50px] items-center font-[montserrat] font-semibold text-[15px]">
+              <a
+                href="/home"
+                className={` hover:border-b-[5px] hover:border-[#0077B6] transition-border-left duration-100 ease-in-out ${
+                  activeItem === "Home" ? "border-b-[5px] border-[#0077B6]" : ""
+                }`}
+                onClick={() => handleclick("Home")}
+              >
+                <li className='p-3'>Home</li>
+              </a>
+              <a
+                href="#"
+                className={` hover:border-b-[5px] hover:border-[#0077B6] transition-border-left duration-100 ease-in-out ${
+                  activeItem === "About" ? "border-b-[5px] border-[#0077B6]" : ""
+                }`}
+                onClick={() => handleclick("About")}
+              >
+                <li className='p-3'>About</li>
+              </a>
+              <a
+                href="#"
+                className={` hover:border-b-[5px] hover:border-[#0077B6] transition-border-left duration-100 ease-in-out ${
+                  activeItem === "Features" ? "border-b-[5px] border-[#0077B6]" : ""
+                }`}
+                onClick={() => handleclick("Features")}
+              >
+                <li className='p-3'>Features</li>
+              </a>
+              <a
+                href="#"
+                className={` hover:border-b-[5px] hover:border-[#0077B6] transition-border-left duration-100 ease-in-out ${
+                  activeItem === "FAQ" ? "border-b-[5px] border-[#0077B6]" : ""
+                }`}
+                onClick={() => handleclick("FAQ")}
+              >
+                <li className='p-3'>FAQ</li>
+              </a>
+              <a
+                href="#"
+                className={` hover:border-b-[5px] hover:border-[#0077B6] transition-border-left duration-100 ease-in-out ${
+                  activeItem === "Contacts" ? "border-b-[5px] border-[#0077B6]" : ""
+                }`}
+                onClick={() => handleclick("Contacts")}
+              >
+                <li className='p-3'>Contacts</li>
+              </a>
+            </ul>
+           </div>
+        </div>
+    </div>
