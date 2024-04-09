@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const OTPInput: React.FC = () => {
   const inputRefs = [
@@ -10,9 +12,10 @@ const OTPInput: React.FC = () => {
     useRef<HTMLInputElement>(null),
   ];
   const [otp, setOTP] = useState<string[]>(["", "", "", ""]);
+  const navigate = useNavigate();
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement> & {nativeEvent: {inputType: string}},
     index: number
   ) => {
     if (event.nativeEvent.inputType === "deleteContentBackward") {
@@ -34,17 +37,46 @@ const OTPInput: React.FC = () => {
       inputRefs[index + 1].current?.focus();
     }
   };
+  const handleSuccess = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      html: `Your Account have be successfully Verified, please Fill-in you details to continue`,
+      confirmButtonText: "Continue",
+      confirmButtonColor: "#0077B6",
+      showCancelButton: false,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+  };
 
-  const handleSubmit = () => {
-    console.log(otp.join(""))
-    axios
-      .post("/activate-user", { otp: otp.join("") })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleSubmit = async () => {
+    try {
+      const activationToken = localStorage.getItem("token");
+      const response = await axios.post("/api/v1/activate-user", {
+        activation_code: otp.join(""),
+        activation_token: activationToken,
       });
+      if (response.data.success) {
+        handleSuccess();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.message,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong!",
+      });
+    }
   };
 
   return (
