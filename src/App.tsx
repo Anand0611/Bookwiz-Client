@@ -1,4 +1,15 @@
-import { LandingPage,Signup,Login,ActivationPage } from "./assets/Pages";
+import {
+  LandingPage,
+  Signup,
+  Login,
+  ActivationPage,
+  ProfileCompletion,
+  DashboardUser,
+  UserProfile,
+  DashboardAdmin,
+  CreateBook,
+  Editbook,
+} from "./assets/Pages";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
@@ -14,6 +25,13 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/activation" element={<ActivationPage />} />
+        <Route path="/profileCompletion" element={<ProfileCompletion />} />
+        <Route path="/userDashboard" element={<DashboardUser />} />
+        <Route path="/adminDashboard" element={<DashboardAdmin />} />
+        <Route path="/userProfile" element={<UserProfile />} />
+        <Route path="/createBook" element={<CreateBook />} />
+        <Route path="/ManageBooks" element={<Editbook />} />
+
         {/* 
         
         
@@ -25,6 +43,6 @@ const App = () => {
       </Routes>
     </>
   );
-}
+};
 
 export default App;

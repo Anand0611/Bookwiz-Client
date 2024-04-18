@@ -66,6 +66,8 @@ const SignupForm = () => {
         if (response.status === 201) {
           console.log(response.data.activationToken);
           localStorage.setItem("token", response.data.activationToken);
+          localStorage.setItem("name", values.firstName);
+          localStorage.setItem("email", values.email);
           setIsLoading(false);
           handleSubmit();
         }
@@ -89,7 +91,7 @@ const SignupForm = () => {
               ease: [0.04, 0.62, 0.23, 0.98],
             }}
           >
-            <div className="text-[30px] font-[MuseoModerno] font-semibold  text-[#3F51B5] pb-[30px]">
+            <div className="text-[30px] font-[MuseoModerno] font-semibold  text-blue-700 pb-[30px]">
               <a href="/home">BookWiz</a>
             </div>
             <div className="text-[20px] font-[Montserrat] font-semibold ">
@@ -210,7 +212,9 @@ const SignupForm = () => {
               <div className="mb-4 max-w-lg mx-auto">
                 <button
                   type="submit"
-                  className={`bg-[#3F51B5] w-full font-[Montserrat] font-bold tex-[20px] text-white py-2 px-4 rounded hover:bg-[#003F8F]`}
+                  className={`bg-blue-700 w-full font-[Montserrat] font-bold tex-[20px] text-white py-2 px-4 rounded hover:bg-[#003F8F] ${
+                    isSubmitted ? "bg-gray-500 cursor-not-allowed" : ""
+                  }`}
                 >
                   {isSubmitted ? "Loading..." : "Sign Up"}
                 </button>
@@ -218,14 +222,16 @@ const SignupForm = () => {
                 <button
                   type="button"
                   className={`bg-[#ffffff] w-full font-[Montserrat] font-bold tex-[20px] text-black border-solid border-black border-[2px] py-2 px-4 rounded hover:bg-black hover:text-white ${
-                    isSubmitted ? "opacity-50 cursor-not-allowed" : ""
+                    isSubmitted
+                      ? "opacity-50 cursor-not-allowed bg-gray-500"
+                      : ""
                   }`}
                 >
                   {isLoading ? "Loading..." : "Sign Up with Google"}
                 </button>
                 <div className="font-[Montserrat] mt-3">
                   Already have an account?{" "}
-                  <a href="/login" className="font-bold text-[#3F51B5]">
+                  <a href="/login" className="font-bold text-blue-700">
                     Login
                   </a>
                 </div>
@@ -234,7 +240,7 @@ const SignupForm = () => {
           </motion.div>
         </div>
       </div>
-      <div className="w-1/2 bg-[#3F51B5] overflow-hidden">
+      <div className="w-1/2 bg-gradient-to-t from-cyan-500 to bg-blue-700 overflow-hidden">
         <motion.div
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FormikErrors, useFormik } from "formik";
 import { motion } from "framer-motion";
 import * as Yup from "yup";
@@ -17,7 +17,7 @@ interface FormErrors extends FormikErrors<Login> {
   form?: string;
 }
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   // const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
@@ -32,20 +32,40 @@ const LoginForm = () => {
       password: Yup.string().required("Password is required"),
     }),
     onSubmit: async (
+      
       values: Login,
       { setErrors }: { setErrors: (errors: FormErrors) => void }
     ) => {
       try {
-        await axios
-          .post("http://localhost:8000/auth/v1/login", values)
-          .then((res) => {
-            if (res.data.message === "Success") {
-              console.log(res.data.message);
-              navigate("/userdashboard");
-            } else {
-              setErrors({ form: res.data.message });
-            }
-          });
+        console.log(values);
+        setIsSubmitted(true);
+        const response = await axios.post(
+          "http://localhost:8000/api/v1/login",
+          { email: values.email, password: values.password },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response);
+        if (response.data.user.isProfileUpdated) {
+          if(response.data.user.role === "Admin"){
+            navigate("/adminDashboard");
+          }else{
+          navigate("/userDashboard");
+          }
+        } else {
+          localStorage.setItem("firstName", response.data.user.firstName);
+          localStorage.setItem("email", response.data.user.email);
+          navigate("/profileCompletion");
+        }
+        if(!response){
+          setTimeout(() => {
+            setIsSubmitted(false)
+          }, 3000);
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
           setErrors({ form: error.response.data.message } as FormErrors);
